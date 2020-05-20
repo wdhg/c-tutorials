@@ -23,7 +23,6 @@ char *getCommand(size_t size) {
 char **getCommands(int n, size_t size) {
   char **commands = createCommands(n);
   for (int i = 0; i < n; i++) {
-    printf("> ");
     commands[i] = getCommand(size);
   }
   return commands;
@@ -41,4 +40,25 @@ void freeCommands(char **commands, int n) {
   }
 }
 
-int main(int argc, char *argv[]) { return 0; }
+int main(int argc, char *argv[]) {
+  if (argc != 3) {
+    puts("Arguments: <number of commands> <max size of command>");
+    return 1;
+  }
+  int n;
+  size_t size;
+  sscanf(argv[1], "%i", &n);
+  sscanf(argv[2], "%i", &size);
+  if (n < 3) {
+    puts("First argument must be greater than or equal to 3");
+    return 1;
+  }
+  if (size < 50) {
+    puts("Second argument must be greater than or equal to 50");
+    return 1;
+  }
+  char **commands = getCommands(n, size);
+  printCommands(commands, n);
+  freeCommands(commands, n);
+  return 0;
+}
