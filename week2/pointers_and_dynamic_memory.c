@@ -29,4 +29,16 @@ char **getCommands(int n, size_t size) {
   return commands;
 }
 
+void printCommands(char **commands, int n) {
+  for (int i = 0; i < n; i++) {
+    printf("%s\n", *commands[i]);
+  }
+}
+
+void freeCommands(char **commands, int n) {
+  for (int i = 0; i < n; i++) {
+    free(commands[i]);
+  }
+}
+
 int main(int argc, char *argv[]) { return 0; }
