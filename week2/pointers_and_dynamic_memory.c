@@ -20,4 +20,13 @@ char *getCommand(size_t size) {
   return command;
 }
 
+char **getCommands(int n, size_t size) {
+  char **commands = createCommands(n);
+  for (int i = 0; i < n; i++) {
+    printf("> ");
+    commands[i] = getCommand(size);
+  }
+  return commands;
+}
+
 int main(int argc, char *argv[]) { return 0; }
