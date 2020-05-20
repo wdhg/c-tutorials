@@ -3,13 +3,13 @@
 
 char *createCommand(size_t size) {
   char *str;
-  str = (char *)calloc(size, sizeof(char));
+  str = calloc(size, sizeof(char));
   return str;
 }
 
 char **createCommands(int n) {
   char **ptrs;
-  ptrs = (char **)calloc((size_t)n, sizeof(char *));
+  ptrs = calloc((size_t)n, sizeof(char *));
   return ptrs;
 }
 
@@ -30,7 +30,7 @@ char **getCommands(int n, size_t size) {
 
 void printCommands(char **commands, int n) {
   for (int i = 0; i < n; i++) {
-    printf("%s\n", *commands[i]);
+    printf("%s", commands[i]);
   }
 }
 
@@ -38,6 +38,7 @@ void freeCommands(char **commands, int n) {
   for (int i = 0; i < n; i++) {
     free(commands[i]);
   }
+  free(commands);
 }
 
 int main(int argc, char *argv[]) {
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
   int n;
   size_t size;
   sscanf(argv[1], "%i", &n);
-  sscanf(argv[2], "%i", &size);
+  sscanf(argv[2], "%lu", &size);
   if (n < 3) {
     puts("First argument must be greater than or equal to 3");
     return 1;
