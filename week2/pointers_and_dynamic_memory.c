@@ -1,40 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *createCommand(size_t size) {
+char *create_command(size_t size) {
   char *str;
   str = calloc(size, sizeof(char));
   return str;
 }
 
-char **createCommands(int n) {
+char **create_commands(int n) {
   char **ptrs;
   ptrs = calloc((size_t)n, sizeof(char *));
   return ptrs;
 }
 
-char *getCommand(size_t size) {
-  char *command = createCommand(size);
+char *get_command(size_t size) {
+  char *command = create_command(size);
   printf("> ");
   fgets(command, size, stdin);
   return command;
 }
 
-char **getCommands(int n, size_t size) {
-  char **commands = createCommands(n);
+char **get_commands(int n, size_t size) {
+  char **commands = create_commands(n);
   for (int i = 0; i < n; i++) {
-    commands[i] = getCommand(size);
+    commands[i] = get_command(size);
   }
   return commands;
 }
 
-void printCommands(char **commands, int n) {
+void print_commands(char **commands, int n) {
   for (int i = 0; i < n; i++) {
     printf("%s", commands[i]);
   }
 }
 
-void freeCommands(char **commands, int n) {
+void free_commands(char **commands, int n) {
   for (int i = 0; i < n; i++) {
     free(commands[i]);
   }
@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
     puts("Second argument must be greater than or equal to 50");
     return 1;
   }
-  char **commands = getCommands(n, size);
-  printCommands(commands, n);
-  freeCommands(commands, n);
+  char **commands = get_commands(n, size);
+  print_commands(commands, n);
+  free_commands(commands, n);
   return 0;
 }
