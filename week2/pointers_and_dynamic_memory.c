@@ -17,6 +17,7 @@ char *getCommand(size_t size) {
   char *command = createCommand(size);
   printf("> ");
   fgets(command, size, stdin);
+  return command;
 }
 
 int main(int argc, char *argv[]) { return 0; }
