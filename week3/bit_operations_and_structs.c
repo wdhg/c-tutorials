@@ -36,5 +36,6 @@ int main(int argc, char *argv[]) {
   printf(" ");
   printBits16(second);
   printf("\n");
+  printBits((((uint32_t)first) << 16) | second);
   return 0;
 }
