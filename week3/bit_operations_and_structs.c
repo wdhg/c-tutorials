@@ -15,7 +15,14 @@ void printBits(uint32_t x) {
   printf("\n");
 }
 
+void splitBits(uint32_t x, uint16_t *first, uint16_t *second) {
+  *first = x >> 16;
+  *second = 0x0000ffff & x;
+}
+
 int main(int argc, char *argv[]) {
   printBits(N);
+  uint16_t first, second;
+  splitBits(N, &first, &second);
   return 0;
 }
