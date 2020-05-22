@@ -23,6 +23,8 @@ void printBits16(uint16_t x) {
   }
 }
 
+void printSBits16(int16_t x) { printBits16((uint16_t)x); }
+
 void splitBits(uint32_t x, uint16_t *first, uint16_t *second) {
   *first = x >> 16;
   *second = 0x0000ffff & x;
@@ -37,5 +39,11 @@ int main(int argc, char *argv[]) {
   printBits16(second);
   printf("\n");
   printBits((((uint32_t)first) << 16) | second);
+  int16_t signedFirst = first << 1;
+  printf("%i %i\n", signedFirst, first);
+  printBits16(first);
+  printf("\n");
+  printSBits16(signedFirst);
+  printf("\n");
   return 0;
 }
