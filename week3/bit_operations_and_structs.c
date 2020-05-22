@@ -30,7 +30,7 @@ void splitBits(uint32_t x, uint16_t *first, uint16_t *second) {
   *second = 0x0000ffff & x;
 }
 
-int main(int argc, char *argv[]) {
+void partOne(void) {
   printBits(N);
   uint16_t first, second;
   splitBits(N, &first, &second);
@@ -45,5 +45,9 @@ int main(int argc, char *argv[]) {
   printf("\n");
   printSBits16(signedFirst);
   printf("\n");
+}
+
+int main(int argc, char *argv[]) {
+  partOne();
   return 0;
 }
