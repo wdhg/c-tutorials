@@ -81,7 +81,13 @@ void layer_compute_outputs(layer_t const *layer) {
 void layer_compute_deltas(layer_t const *layer) {
   /**** PART 1 - QUESTION 6 ****/
   /* objective: compute layer->deltas */
-
+  for (int input = 0; input < layer->next->num_inputs; input++) {
+    double sum = 0;
+    for (int output = 0; output < layer->next->num_outputs; output++) {
+      sum += layer->next->weights[output][input] * layer->next->outputs[output];
+    }
+    layer->deltas[input] = sigmoidprime(layer->outputs[input]) * sum;
+  }
   /* 2 MARKS */
 }
 
