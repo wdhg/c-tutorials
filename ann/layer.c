@@ -19,7 +19,26 @@ layer_t *layer_create() {
 /* Initialises the given layer. */
 bool layer_init(layer_t *layer, int num_outputs, layer_t *prev) {
   /**** PART 1 - QUESTION 3 ****/
-  return true; // delete after implementing
+  layer->num_outputs = num_outputs;
+  // allocate memory for weights, biases, deltas
+  int neuron_count = layer->num_inputs * layer->num_outputs;
+  layer->weights = calloc(neuron_count, sizeof(double));
+  layer->biases = calloc(neuron_count, sizeof(double));
+  layer->deltas = calloc(neuron_count, sizeof(double));
+  if (layer->weights == NULL || layer->biases == NULL ||
+      layer->deltas == NULL) {
+    return true; // return true for failure
+  }
+  if (prev != NULL) { // check if output layer
+    layer->num_inputs = prev->num_outputs;
+    // assign incoming weights, biases, deltas
+    for (int output = 0; output < layer->num_outputs; output++) {
+      for (int input = 0; input < layer->num_inputs; input++) {
+        layer->weights[output][input] = ANN_RANDOM();
+      }
+    }
+  }
+  return false;
   /* 4 MARKS */
 }
 
