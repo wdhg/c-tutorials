@@ -42,7 +42,7 @@ void ann_free(ann_t *ann) {
 void ann_predict(ann_t const *ann, double const *inputs) {
   /**** PART 2 - QUESTION 3 ****/
   ann->input_layer->outputs = inputs;
-  layer_t layer = ann->input_layer->next;
+  layer_t *layer = ann->input_layer->next;
   while (layer != NULL) {
     layer_compute_outputs(layer);
     layer = layer->next;
