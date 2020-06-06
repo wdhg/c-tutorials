@@ -45,7 +45,19 @@ bool layer_init(layer_t *layer, int num_outputs, layer_t *prev) {
 /* Frees a given layer. */
 void layer_free(layer_t *layer) {
   /**** PART 1 - QUESTION 4 ****/
-
+  if (layer == NULL) {
+    return;
+  }
+  if (layer->weights != NULL) {
+    free(layer->weights);
+  }
+  if (layer->biases != NULL) {
+    free(layer->biases);
+  }
+  if (layer->deltas != NULL) {
+    free(layer->deltas);
+  }
+  free(layer);
   /* 2 MARKS */
 }
 
