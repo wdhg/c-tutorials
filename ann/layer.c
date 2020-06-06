@@ -12,7 +12,7 @@ double sigmoidprime(double x) { return x * (1 - x); }
 /* Creates a single layer. */
 layer_t *layer_create() {
   /**** PART 1 - QUESTION 2 ****/
-  return NULL; // delete after implementing
+  return (layer_t *)calloc(1, sizeof(layer_t));
   /* 2 MARKS */
 }
 
