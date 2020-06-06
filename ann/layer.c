@@ -95,7 +95,7 @@ void layer_compute_deltas(layer_t const *layer) {
 void layer_update(layer_t const *layer, double l_rate) {
   /**** PART 1 - QUESTION 7 ****/
   for (int output = 0; output < layer->num_outputs; output++) {
-    for (int input = 0; input < layer->num_inputs; inputs++) {
+    for (int input = 0; input < layer->num_inputs; input++) {
       layer->weights[output][input] +=
           l_rate * layer->outputs[output] * layer->deltas[output];
     }

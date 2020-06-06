@@ -1,5 +1,7 @@
 #include "ann.h"
 
+#include <string.h>
+
 /* Creates and returns a new ann. */
 ann_t *ann_create(int num_layers, int *layer_outputs) {
   /**** PART 2 - QUESTION 1 ****/
@@ -41,7 +43,7 @@ void ann_free(ann_t *ann) {
 /* Forward run of given ann with inputs. */
 void ann_predict(ann_t const *ann, double const *inputs) {
   /**** PART 2 - QUESTION 3 ****/
-  ann->input_layer->outputs = inputs;
+  memcpy(ann->input_layer->outputs, inputs, ann->input_layer->num_outputs);
   layer_t *layer = ann->input_layer->next;
   while (layer != NULL) {
     layer_compute_outputs(layer);
@@ -64,8 +66,9 @@ void ann_train(ann_t const *ann, double const *inputs, double const *targets,
 
   /**** PART 2 - QUESTION 4 ****/
   for (int output = 0; output < ann->output_layer->num_outputs; output++) {
-    double difference = targets[output] - ann->outputs[output];
-    ann->deltas[outputs] = sigmoidprime(ann->outputs[output]) * difference;
+    double output_value = ann->output_layer->outputs[output];
+    double difference = targets[output] - output_value;
+    ann->output_layer->deltas[output] = sigmoidprime(output_value) * difference;
   }
   layer_t *layer = ann->output_layer->prev;
   while (layer != NULL) {
