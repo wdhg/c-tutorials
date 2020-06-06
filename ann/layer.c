@@ -30,6 +30,8 @@ bool layer_init(layer_t *layer, int num_outputs, layer_t *prev) {
     return true; // return true for failure
   }
   if (prev != NULL) { // check if output layer
+    layer->prev = prev;
+    prev->next = layer;
     layer->num_inputs = prev->num_outputs;
     // assign incoming weights, biases, deltas
     for (int output = 0; output < layer->num_outputs; output++) {
