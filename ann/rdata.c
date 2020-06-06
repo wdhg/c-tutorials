@@ -1,13 +1,12 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 /**** PART 3 - QUESTION 1 ****/
 /* 4 MARKS */
 
 /* Creates and displays random data for training. */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   /* Check argument count. */
   if (argc != 3) {
     printf("Usage, random_data rows columns\n");
@@ -22,22 +21,23 @@ int main(int argc, char *argv[])
   int input_cols = atoi(argv[2]);
 
   /* Create dynamic arrays. */
-  printf("Creating (%d, %d) -> %d input output combination.\n", input_rows, input_cols, input_rows);
-  double **inputs = calloc(input_rows, sizeof(double*));
+  printf("Creating (%d, %d) -> %d input output combination.\n", input_rows,
+         input_cols, input_rows);
+  double **inputs = calloc(input_rows, sizeof(double *));
   double *targets = calloc(input_rows, sizeof(double));
 
   /* Initialise with random numbers. */
-  for(int i = 0; i < input_rows; ++i) {
+  for (int i = 0; i < input_rows; ++i) {
     inputs[i] = calloc(input_cols, sizeof(double));
-    for(int j = 0; j < input_cols; ++j) {
-      inputs[i][j] = (((double)rand())/RAND_MAX);
+    for (int j = 0; j < input_cols; ++j) {
+      inputs[i][j] = (((double)rand()) / RAND_MAX);
     }
-    targets[i] = (((double)rand())/RAND_MAX);
+    targets[i] = (((double)rand()) / RAND_MAX);
   }
 
   /* Display the random data. */
-  for(int i = 0; i < input_rows; ++i) {
-    for(int j = 0; j < input_cols; ++j) {
+  for (int i = 0; i < input_rows; ++i) {
+    for (int j = 0; j < input_cols; ++j) {
       printf(" %f ", inputs[i][j]);
     }
     printf("-> %f\n", targets[i]);
@@ -45,6 +45,9 @@ int main(int argc, char *argv[])
 
   /* Free up resources. */
   free(targets);
+  for (int i = 0; i < input_rows; i++) {
+    free(inputs[i]);
+  }
   free(inputs);
 
   return EXIT_SUCCESS;
