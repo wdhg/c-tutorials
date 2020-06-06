@@ -4,10 +4,22 @@
 ann_t *ann_create(int num_layers, int *layer_outputs) {
   /**** PART 2 - QUESTION 1 ****/
   ann_t *ann = (ann_t *)calloc(1, sizeof(ann_t));
-  ann->input_layer = layer_init(layer_create(), layer_outputs[0], NULL);
-  layer_t *prev_layer = ann->input_layer;
-  for (int i = 1; i < num_layers; i++) {
-    layer_t *layer = layer_init(layer_create(), layer_outputs[i], prev_layer);
+  layer_t *layer;
+  layer_t *prev_layer;
+  bool err;
+  for (int i = 0; i < num_layers; i++) {
+    layer = layer_create();
+    if (i == 0) {
+      err = layer_init(layer, layer_outputs[i], NULL);
+      ann->input_layer = layer;
+      prev_layer = layer;
+    } else {
+      err = layer_init(layer, layer_outputs[i], prev_layer);
+    }
+    if (err) {
+      return NULL;
+    }
+    prev_layer = layer;
   }
   ann->output_layer = prev_layer->next;
   return ann;
