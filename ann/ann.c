@@ -51,6 +51,15 @@ void ann_train(ann_t const *ann, double const *inputs, double const *targets,
   ann_predict(ann, inputs);
 
   /**** PART 2 - QUESTION 4 ****/
-
+  for (int output = 0; output < ann->output_layer->num_outputs; output++) {
+    double difference = targets[output] - ann->outputs[output];
+    ann->deltas[outputs] = sigmoidprime(ann->outputs[output]) * difference;
+  }
+  layer_t *layer = ann->output_layer->prev;
+  while (layer != NULL) {
+    layer_compute_deltas(layer);
+    layer_update(layer, l_rate);
+    layer = layer->prev;
+  }
   /* 3 MARKS */
 }
