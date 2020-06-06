@@ -17,7 +17,12 @@ ann_t *ann_create(int num_layers, int *layer_outputs) {
 /* Frees the space allocated to ann. */
 void ann_free(ann_t *ann) {
   /**** PART 2 - QUESTION 2 ****/
-
+  layer_t *layer = ann->input_layer;
+  while (layer != NULL) {
+    layer_t *next = layer->next;
+    layer_free(layer);
+    layer = next;
+  }
   /* 2 MARKS */
 }
 
