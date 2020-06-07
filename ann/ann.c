@@ -33,6 +33,7 @@ void ann_free(ann_t *ann) {
     layer_free(layer);
     layer = next;
   }
+  free(ann);
   /* 2 MARKS */
 }
 
