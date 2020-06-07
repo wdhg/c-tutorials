@@ -1,29 +1,25 @@
 #include "ann.h"
 
+#include <stdio.h>
 #include <string.h>
 
 /* Creates and returns a new ann. */
 ann_t *ann_create(int num_layers, int *layer_outputs) {
   /**** PART 2 - QUESTION 1 ****/
   ann_t *ann = (ann_t *)calloc(1, sizeof(ann_t));
-  layer_t *layer;
-  layer_t *prev_layer;
-  bool err;
+  layer_t *prev_layer = NULL;
   for (int i = 0; i < num_layers; i++) {
-    layer = layer_create();
-    if (i == 0) {
-      err = layer_init(layer, layer_outputs[i], NULL);
-      ann->input_layer = layer;
-      prev_layer = layer;
-    } else {
-      err = layer_init(layer, layer_outputs[i], prev_layer);
-    }
+    layer_t *layer = layer_create();
+    bool err = layer_init(layer, layer_outputs[i], prev_layer);
     if (err) {
       return NULL;
     }
+    if (i == 0) {
+      ann->input_layer = layer;
+    }
     prev_layer = layer;
   }
-  ann->output_layer = prev_layer->next;
+  ann->output_layer = prev_layer;
   return ann;
   /* 4 MARKS */
 }
@@ -43,7 +39,9 @@ void ann_free(ann_t *ann) {
 /* Forward run of given ann with inputs. */
 void ann_predict(ann_t const *ann, double const *inputs) {
   /**** PART 2 - QUESTION 3 ****/
-  memcpy(ann->input_layer->outputs, inputs, ann->input_layer->num_outputs);
+  for (int input = 0; input < ann->input_layer->num_outputs; input++) {
+    ann->input_layer->outputs[input] = inputs[input];
+  }
   layer_t *layer = ann->input_layer->next;
   while (layer != NULL) {
     layer_compute_outputs(layer);
@@ -70,8 +68,9 @@ void ann_train(ann_t const *ann, double const *inputs, double const *targets,
     double difference = targets[output] - output_value;
     ann->output_layer->deltas[output] = sigmoidprime(output_value) * difference;
   }
+  layer_update(ann->output_layer, l_rate);
   layer_t *layer = ann->output_layer->prev;
-  while (layer != NULL) {
+  while (layer->prev != NULL) {
     layer_compute_deltas(layer);
     layer_update(layer, l_rate);
     layer = layer->prev;
